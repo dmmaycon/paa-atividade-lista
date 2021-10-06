@@ -1,128 +1,66 @@
 #include "LDDE_privado.h"
 
-Lista *cria(TipoAplicacao *valor)
-{
-    Lista *nova_Lista = (Lista *)malloc(sizeof(Lista));
-    nova_Lista->valor = valor;
-    nova_Lista->proximo = NULL;
-    nova_Lista->anterior = NULL;
-    return nova_Lista;
+/**
+ * Cria uma lista (um no inicial) e retorna para a aplicação
+ */
+int criarLista(ppLista lista, int valor) {
+
+    (*lista) = (pLista*) malloc(sizeof(pLista));
+    (*lista)->valor = valor;
+    (*lista)->anterior = NULL;
+    (*lista)->proximo  = NULL;
+    
+    return SUCESSO;
 }
 
-Lista *insere(Lista *lista, TipoAplicacao *valor, int posicao)
-{
-    if (lista == NULL)
-    {
-        lista = cria(valor);
-        return lista;
-    }
 
-    if (posicao > 0)
-    {
-        Lista *copia = lista, *temporario = copia;
-        int flag = 1, index = 1, size = 0;
-
-        while (temporario != NULL)
-        {
-            size++;
-            temporario = temporario->proximo;
-        }
-
-        if (posicao == 1)
-        {
-            Lista *novo_no = cria(valor);
-            novo_no->proximo = copia;
-            copia->anterior = novo_no;
-            lista = novo_no;
-            return lista;
-        }
-
-        if (size + 2 > posicao)
-        {
-            while (copia->proximo != NULL && index < posicao)
-            {
-                flag++;
-                index++;
-                copia = copia->proximo;
-            }
-
-            Lista *novo_no = (Lista *)malloc(sizeof(Lista));
-            novo_no->valor = valor;
-
-            if (flag == posicao)
-            {
-                copia->anterior->proximo = novo_no;
-                novo_no->proximo = copia;
-                novo_no->anterior = copia->anterior;
-                copia->anterior = novo_no;
-            }
-
-            if (flag < posicao)
-            {
-                novo_no->proximo = copia->proximo;
-                novo_no->anterior = copia;
-                copia->proximo = novo_no;
-            }
-        }
-        return lista;
+int destruirLista(ppLista lista) {
+    if (lista != NULL) {
+        // guarda a referencia do proximo
+        pLista* proximo = (*lista)->proximo;
+        // limpa o no atual
+        free(lista);    
+        destruirLista(proximo);    
     }
 }
 
-Lista *retira(Lista *lista, int posicao)
-{
-    if (lista == NULL)
-        return lista;
-
-    if (posicao > 0)
-    {
-        Lista *copia = lista, *temporario = copia;
-        int flag = 1, index = 1, size = 0;
-
-        while (temporario != NULL)
-        {
-            size++;
-            temporario = temporario->proximo;
+int inserirInicio(ppLista lista, int valor) {
+    
+    if ((*lista)->anterior == NULL) {
+        pLista listaTemp = NULL;
+        if (!criarLista(&listaTemp, valor)) {
+            return FRACASSO;
         }
-
-        if (posicao == 1)
-        {
-            if (size == 1)
-                return NULL;
-            copia = copia->proximo;
-            copia->anterior = NULL;
-            return copia;
-        }
-
-        if (size + 2 > posicao)
-        {
-            while (copia->proximo != NULL && index < posicao)
-            {
-                flag++;
-                index++;
-                copia = copia->proximo;
-            }
-
-            if (flag == posicao)
-            {
-                if (copia->proximo != NULL)
-                {
-                    copia->anterior->proximo = copia->proximo;
-                    copia->proximo->anterior = copia->anterior;
-                }
-
-                else
-                    copia->anterior->proximo = NULL;
-            }
-        }
-        return lista;
+        listaTemp->proximo = lista;
+        (*lista)->anterior = listaTemp;
+        return SUCESSO;
     }
+    inserirInicio((*lista)->anterior, valor);
 }
 
-int pesquisa(Lista *lista, TipoAplicacao *valor)
-{
-    if (lista == NULL)
-        return 0;
-    if (lista->valor == valor)
-        return 1;
-    pesquisa(lista->proximo, valor);
+
+int inserirFim(ppLista lista, int valor);
+int inserirPosicao(ppLista lista, int valor, int posicao);
+
+int removerInicio(ppLista lista);
+int removerFim(ppLista lista);
+int removerPosicao(ppLista lista, int posicao);
+
+void imprimeListaLigada(ppLista lista) {
+    buscaInicioLista(&lista);
+}
+
+int buscaInicioLista(ppLista lista) {
+   
+   if ((*lista)->anterior == NULL) {
+       return SUCESSO;
+   }
+
+
+   while ((*lista)->anterior != NULL)
+   {
+       (*lista)->anterior;
+   }
+    
+   
 }

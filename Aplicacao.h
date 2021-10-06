@@ -6,14 +6,6 @@
 #define INTEIRO 1
 #define FLOAT   2
 
-struct tipoAplicacao {
-    int codigoTipo;
-    union {
-        int iElemento;
-        float fElemento;
-    } elemento;    
-} typedef TipoAplicacao;
 
-void imprime(Lista *slista);
 
 

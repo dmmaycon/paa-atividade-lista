@@ -1,7 +1,16 @@
-struct lista typedef Lista;
-struct tipoAplicacao typedef TipoAplicacao;
+struct lista typedef *pLista, **ppLista;
 
-Lista *cria(TipoAplicacao *valor);
-Lista *insere(Lista *slista, TipoAplicacao *valor, int pos);
-Lista *retira(Lista *slista, int pos);
-int pesquisa(Lista *slista, TipoAplicacao *valor);
+int criarLista(ppLista lista, int valor);
+int destruirLista(ppLista lista);
+
+int inserirInicio(ppLista lista, int valor);
+int inserirFim(ppLista lista, int valor);
+int inserirPosicao(ppLista lista, int valor, int posicao);
+
+int removerInicio(ppLista lista);
+int removerFim(ppLista lista);
+int removerPosicao(ppLista lista, int posicao);
+
+int buscaInicioLista(ppLista lista); 
+
+void imprimeListaLigada(ppLista lista);

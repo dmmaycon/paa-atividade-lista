@@ -3,23 +3,16 @@
 
 int main() {
 
-    Lista *lista = NULL;
-    int searching;
-    TipoAplicacao taInt = {INTEIRO, 10};
-    TipoAplicacao taFloat = {FLOAT, 20.5};
+    pLista lista = NULL;
 
+    int validacao = criarLista(&lista, 100);
+    printf("\nCriando a lista duplamente ligada. Retorno da operacação: %d", validacao);
 
-    lista = cria(&taInt);
-    lista = insere(lista, &taFloat, 1);
-    
-    searching = pesquisa(lista, &taFloat);
-    printf("\n%d\n", searching);
+    imprimeListaLigada(&lista);
 
-    lista = retira (lista, 1);
-    lista = retira (lista, 1);
+    validacao = inserirInicio(&lista, 200);
+    printf("\nInserindo um valor no inicio. Retorno da operacação: %d", validacao);
 
-    imprime(lista);
-    searching = pesquisa(lista, &taFloat);
-    printf("\n%d\n", searching);
-    return 0;
+    // destruirLista(&lista);
+    imprimeListaLigada(lista);
 }

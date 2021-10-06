@@ -4,8 +4,10 @@
 
 #include "LDDE_publico.h"
 
-struct lista {
-    struct tipoAplicacao *valor;               
-    struct lista *proximo, *anterior;  
-} typedef Lista;
+#define FRACASSO 0
+#define SUCESSO 1
 
+struct lista {
+    int valor;               
+    struct lista *anterior, *proximo;  
+};
