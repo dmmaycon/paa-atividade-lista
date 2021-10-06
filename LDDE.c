@@ -1,66 +1,68 @@
 #include "LDDE_privado.h"
 
-/**
- * Cria uma lista (um no inicial) e retorna para a aplicação
- */
-int criarLista(ppLista lista, int valor) {
-
-    (*lista) = (pLista*) malloc(sizeof(pLista));
-    (*lista)->valor = valor;
-    (*lista)->anterior = NULL;
-    (*lista)->proximo  = NULL;
-    
-    return SUCESSO;
+// cria um novo nó e retorna o ponteiro para o elemento
+struct Node* criarNovoNo(int x) {
+	struct Node* newNode
+		= (struct Node*)malloc(sizeof(struct Node));
+	newNode->data = x;
+	newNode->prev = NULL;
+	newNode->next = NULL;
+	return newNode;
 }
 
+// insere um no no inicio da lista
+void inserirNoInicio(int x) {
+	struct Node* newNode = criarNovoNo(x);
+	if(head == NULL) {
+		head = newNode;
+		return;
+	}
+	head->prev = newNode;
+	newNode->next = head; 
+	head = newNode;
+}
 
-int destruirLista(ppLista lista) {
-    if (lista != NULL) {
-        // guarda a referencia do proximo
-        pLista* proximo = (*lista)->proximo;
-        // limpa o no atual
-        free(lista);    
-        destruirLista(proximo);    
+// insere um nó no final da lista
+void inserirNoFim(int x) {
+	struct Node* temp = head;
+	struct Node* newNode = criarNovoNo(x);
+	if(head == NULL) {
+		head = newNode;
+		return;
+	}
+	while (temp->next != NULL) {
+        temp = temp->next; // Vai para o ultimo no
+    }  
+	temp->next = newNode;
+	newNode->prev = temp;
+}
+
+//imprimime toda a lista do inicio para o fim
+void imprimi() {
+	struct Node* temp = head;
+	printf("Do inicio para o Fim: ");
+	while(temp != NULL) {
+		printf("%d ",temp->data);
+		temp = temp->next;
+	}
+	printf("\n");
+}
+
+// imprime toda a lista do fim para o inicio
+void imprimiInvertido() {
+	struct Node* temp = head;
+	if (temp == NULL) {
+        return; // se tiver vazio sai
     }
-}
-
-int inserirInicio(ppLista lista, int valor) {
-    
-    if ((*lista)->anterior == NULL) {
-        pLista listaTemp = NULL;
-        if (!criarLista(&listaTemp, valor)) {
-            return FRACASSO;
-        }
-        listaTemp->proximo = lista;
-        (*lista)->anterior = listaTemp;
-        return SUCESSO;
-    }
-    inserirInicio((*lista)->anterior, valor);
-}
-
-
-int inserirFim(ppLista lista, int valor);
-int inserirPosicao(ppLista lista, int valor, int posicao);
-
-int removerInicio(ppLista lista);
-int removerFim(ppLista lista);
-int removerPosicao(ppLista lista, int posicao);
-
-void imprimeListaLigada(ppLista lista) {
-    buscaInicioLista(&lista);
-}
-
-int buscaInicioLista(ppLista lista) {
-   
-   if ((*lista)->anterior == NULL) {
-       return SUCESSO;
-   }
-
-
-   while ((*lista)->anterior != NULL)
-   {
-       (*lista)->anterior;
-   }
-    
-   
+	// vai para o ultimo no
+	while(temp->next != NULL) {
+		temp = temp->next;
+	}
+	// volta para o ponteiro anterior
+	printf("Do Fim para o inicio: ");
+	while(temp != NULL) {
+		printf("%d ",temp->data);
+		temp = temp->prev;
+	}
+	printf("\n");
 }

@@ -2,17 +2,17 @@
 
 
 int main() {
-
-    pLista lista = NULL;
-
-    int validacao = criarLista(&lista, 100);
-    printf("\nCriando a lista duplamente ligada. Retorno da operacação: %d", validacao);
-
-    imprimeListaLigada(&lista);
-
-    validacao = inserirInicio(&lista, 200);
-    printf("\nInserindo um valor no inicio. Retorno da operacação: %d", validacao);
-
-    // destruirLista(&lista);
-    imprimeListaLigada(lista);
+	
+	inserirNoFim(2); 
+    imprimi(); 
+    imprimiInvertido();
+	inserirNoFim(4); 
+    imprimi(); 
+    imprimiInvertido();
+	inserirNoInicio(6); 
+    imprimi(); 
+    imprimiInvertido();
+	inserirNoFim(8); 
+    imprimi(); 
+    imprimiInvertido();
 }
